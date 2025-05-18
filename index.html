@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Playground: The Conversational Sculptor</title>
+    <style>
+        :root {
+            --openai-primary: #10a37f;
+            --openai-secondary: #0e8a6c;
+            --openai-light: #e6f7f4;
+            --text-dark: #202123;
+            --text-medium: #6e6e80;
+            --background: #f7f7f8;
+            --white: #ffffff;
+            --border: #e5e5e5;
+            --highlight: #f3faf9;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Söhne', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--openai-primary) 0%, var(--openai-secondary) 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .sections-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .section-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-header {
+            background-color: var(--openai-primary);
+            color: white;
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .section-content {
+                flex-direction: row;
+            }
+        }
+        
+        .feature-box, .ethics-box {
+            padding: 25px;
+        }
+        
+        .feature-box {
+            flex: 1;
+            background-color: var(--white);
+        }
+        
+        .ethics-box {
+            flex: 1;
+            background-color: var(--openai-light);
+            border-top: 1px solid var(--border);
+        }
+        
+        @media (min-width: 768px) {
+            .ethics-box {
+                border-top: none;
+                border-left: 1px solid var(--border);
+            }
+        }
+        
+        .box-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: var(--openai-primary);
+        }
+        
+        .box-title span {
+            margin-right: 10px;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+            line-height: 1.5;
+        }
+        
+        .feature-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--openai-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .ethics-content {
+            line-height: 1.7;
+        }
+        
+        .tip-box {
+            margin-top: 40px;
+            background: var(--highlight);
+            border-left: 4px solid var(--openai-primary);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--openai-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-title span {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+        
+        .glow {
+            display: inline-block;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px rgba(16, 163, 127, 0.5);
+            }
+            to {
+                text-shadow: 0 0 15px rgba(16, 163, 127, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OpenAI Playground: <span class="glow">The Conversational Sculptor</span></h1>
+            <p class="subtitle">Explore how OpenAI's interface design embeds ethical considerations into every interaction, balancing innovation with responsible AI principles.</p>
+        </header>
+        
+        <div class="sections-grid">
+            <!-- Prompt Window Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">💬</div>
+                    Prompt Window
+                </div>
+                <div class="section-content">
+                    <div class="feature-box">
+                        <h3 class="box-title"><span>🔍</span> Features</h3>
+                        <ul class="feature-list">
+                            <li>Text area with clear role separation</li>
+                            <li>System prompt for establishing AI behavior</li>
+                            <li>User messages for direct queries</li>
+                            <li>Assistant responses with controlled formatting</li>
+                            <li>Visual distinction between different roles</li>
+                        </ul>
+                    </div>
+                    <div class="ethics-box">
+                        <h3 class="box-title"><span>⚖️</span> Ethical Dimension</h3>
+                        <p class="ethics-content">
+                            Role separation encourages context clarity and provides bounded control. When misaligned, system prompts can cause unintended data leakage or bias amplification. This architecture promotes deliberate prompt engineering rather than ad-hoc experimentation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controls Sidebar Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">🎛️</div>
+                    Controls Sidebar
+                </div>
+                <div class="section-content">
+                    <div class="feature-box">
+                        <h3 class="box-title"><span>🔍</span> Features</h3>
+                        <ul class="feature-list">
+                            <li>Temperature slider (creativity vs. determinism)</li>
+                            <li>Top-p sampling control (diversity of outputs)</li>
+                            <li>Max tokens limiter (output length)</li>
+                            <li>Frequency penalty (repetition reduction)</li>
+                            <li>Presence penalty (topic diversity)</li>
+                        </ul>
+                    </div>
+                    <div class="ethics-box">
+                        <h3 class="box-title"><span>⚖️</span> Ethical Dimension</h3>
+                        <p class="ethics-content">
+                            These parameters balance creativity against safety. The default temperature of 0.7 represents OpenAI's calculated tradeoff between innovation and risk. Higher values increase unpredictability, while lower values improve reliability but may reduce creative problem-solving.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Usage Dashboard Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">📊</div>
+                    Usage Dashboard
+                </div>
+                <div class="section-content">
+                    <div class="feature-box">
+                        <h3 class="box-title"><span>🔍</span> Features</h3>
+                        <ul class="feature-list">
+                            <li>Token consumption graphs over time</li>
+                            <li>Cost tracking and billing integration</li>
+                            <li>Usage patterns visualization</li>
+                            <li>Model-specific consumption metrics</li>
+                            <li>Export functionality for reporting</li>
+                        </ul>
+                    </div>
+                    <div class="ethics-box">
+                        <h3 class="box-title"><span>⚖️</span> Ethical Dimension</h3>
+                        <p class="ethics-content">
+                            Visibility discourages over-use by making consumption patterns transparent. This reduces both environmental impact (computational resources) and unnecessary expenses. Clear usage statistics help organizations set rational boundaries and avoid runaway AI costs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Filter Log Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">🛡️</div>
+                    Content Filter Log
+                </div>
+                <div class="section-content">
+                    <div class="feature-box">
+                        <h3 class="box-title"><span>🔍</span> Features</h3>
+                        <ul class="feature-list">
+                            <li>Blocked prompts with category codes</li>
+                            <li>Categorized violations: Hate, Self-harm, Harassment</li>
+                            <li>Additional categories: Sexual/Minor, Violence</li>
+                            <li>Timestamp and session context</li>
+                            <li>Explanation of policy violation</li>
+                        </ul>
+                    </div>
+                    <div class="ethics-box">
+                        <h3 class="box-title"><span>⚖️</span> Ethical Dimension</h3>
+                        <p class="ethics-content">
+                            Transparent "why" messages help users iterate ethically rather than resorting to guesswork or circumvention. Many competing APIs simply reject prompts without explanation, which can lead to frustration and workarounds that may bypass important safeguards.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Policy Tab Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">📜</div>
+                    Policy Tab
+                </div>
+                <div class="section-content">
+                    <div class="feature-box">
+                        <h3 class="box-title"><span>🔍</span> Features</h3>
+                        <ul class="feature-list">
+                            <li>Links to model usage policies</li>
+                            <li>Updated documentation (April 2025)</li>
+                            <li>Case examples of appropriate use</li>
+                            <li>Prohibited use categories</li>
+                            <li>Version history and change tracking</li>
+                        </ul>
+                    </div>
+                    <div class="ethics-box">
+                        <h3 class="box-title"><span>⚖️</span> Ethical Dimension</h3>
+                        <p class="ethics-content">
+                            Having policy text one click away satisfies the "notice" principle in privacy regulations. This integrated approach treats governance as a feature, not an afterthought, ensuring users have immediate access to guidelines without leaving the platform.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <h3 class="tip-title"><span>💡</span> Pro Tip</h3>
+            <p>Highlight part of your prompt and press ⌘+K (Ctrl+K) to spawn an inline explanation dialog: "Why might this text violate policy?" These insights are valuable for compliance documentation and understanding boundary cases.</p>
+        </div>
+        
+        <footer>
+            <p>From Lesson 2: Survey of AI Tools & Platforms (2025) — Comparing Azure AI Studio, OpenAI Playground, and Hugging Face Hub</p>
+        </footer>
+    </div>
+</body>
+</html>
